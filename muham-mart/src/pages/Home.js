@@ -51,7 +51,9 @@ const Home = () => {
     const handleSignInClick = () => {
         navigate('/login');
     };
-
+    const handleLearnMoreClick = () => {
+        navigate('/about');
+    };
     return (
         <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -92,7 +94,7 @@ const Home = () => {
                 justifyContent="center"
                 >
                 <Button variant="contained" onClick={handleSignInClick}>Sign In</Button>
-                <Button variant="outlined">Learn More</Button>
+                <Button variant="outlined" onClick={handleLearnMoreClick}>Learn More</Button>
                 </Stack>
             </Container>
             </Box>
