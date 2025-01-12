@@ -1,8 +1,6 @@
 // App.js
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -10,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid2 from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
@@ -18,7 +15,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme.js'
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.js';
-
+import muhammadiyahLogo from '../assets/images/muhammadiyah_logo.png';
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -78,6 +75,12 @@ const Home = () => {
                 >
                 Welcome to MuhamMart
                 </Typography>
+                <CardMedia
+                    component="img"
+                    image={muhammadiyahLogo} // Use imported logo
+                    alt="Muhammadiyah Logo"
+                    sx={{ width: '200px', margin: '0 auto', pt: 2 }}
+                />
                 <Typography variant="h5" align="center" color="text.secondary">
                 Your one-stop shop for all your needs. Earn vouchers, shop products,
                 and track your orders - all in one place.
@@ -100,11 +103,6 @@ const Home = () => {
                     <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                     >
-                    <CardMedia
-                        component="img"
-                        image={card.image}
-                        alt={card.title}
-                    />
                     <CardContent sx={{ flexGrow: 1 }}>
                         <Typography gutterBottom variant="h5" component="h2">
                         {card.title}
