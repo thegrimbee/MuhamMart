@@ -19,6 +19,9 @@ const Header = () => {
             MuhamMart
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
+          <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
+            Guest
+          </Typography>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
