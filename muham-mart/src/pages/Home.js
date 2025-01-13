@@ -16,17 +16,7 @@ import theme from '../theme.js'
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.js';
 import muhammadiyahLogo from '../assets/images/muhammadiyah_logo.png';
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        MuhamMart
-      </Link>{' '}
-      {new Date().getFullYear()}
-    </Typography>
-  );
-}
+import Footer from '../components/Footer.js';
 
 const cards = [
   {
@@ -57,7 +47,6 @@ const Home = () => {
     return (
         <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Header></Header>
         <main>
             {/* Hero unit */}
             <Box
@@ -119,21 +108,7 @@ const Home = () => {
             </Grid2>
             </Container>
         </main>
-        {/* Footer */}
-        <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-            <Typography variant="h6" align="center" gutterBottom>
-            Muhammadiyah Welfare Home
-            </Typography>
-            <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-            >
-            Empowering residents through technology
-            </Typography>
-            <Copyright />
-        </Box>
+        <Footer />
         </ThemeProvider>
     );
 }
