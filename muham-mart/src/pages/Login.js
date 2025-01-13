@@ -21,7 +21,7 @@ const Login = () => {
       <h1>Current Users</h1>
       <ul>
         {users.map(user => (
-          <li key={user.Username}>{user.Username}</li>
+          <li key={user.name}>{user.name}</li>
         ))}
       </ul>
     </div>
