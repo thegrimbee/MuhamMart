@@ -108,7 +108,6 @@ const Home = () => {
             </Grid2>
             </Container>
         </main>
-        <Footer />
         </ThemeProvider>
     );
 }
