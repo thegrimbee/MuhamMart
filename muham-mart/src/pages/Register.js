@@ -11,12 +11,18 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [warning, setWarning] = useState('');
   const navigate = useNavigate();
   const { usersCollection } = useFirestore();
   const auth = getAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (password.length < 6) {
+        setWarning('Password must be at least 6 characters long');
+        return;
+    }
 
     try {
       // Create user with email and password
@@ -34,7 +40,15 @@ const Register = () => {
       // Redirect to login page or dashboard
       navigate('/login');
     } catch (error) {
-      console.error('Error registering user:', error.message);
+      // Check for specific error codes
+      if (error.code === 'auth/email-already-in-use') {
+        setWarning('Email is already in use');
+      } else if (error.code === 'auth/invalid-email'){
+        setWarning('Invalid email address');
+      } else {
+        console.error('Error registering user:', error.message);
+        setWarning('Error registering user');
+      }
     }
   };
 
@@ -71,6 +85,11 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {warning && (
+            <Typography color="error" variant="body2">
+            {warning}
+            </Typography>
+         )}
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Register
           </Button>
