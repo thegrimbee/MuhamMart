@@ -31,17 +31,17 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 //collection reference
-const items = collection(db, 'Items');
+const products = collection(db, 'Products');
 const users = collection(db, 'Users');
 const carts = collection(db, 'Carts');
 
 //get documents
-getDocs(items).then((Snapshot) => {
-  let items = [];
+getDocs(products).then((Snapshot) => {
+  let products = [];
   Snapshot.forEach((doc) => {
-    items.push({...doc.data(), id: doc.id});
+    products.push({...doc.data(), id: doc.id});
   });
-  console.log(items);
+  console.log(products);
 });
 
 // If you want to start measuring performance in your app, pass a function
