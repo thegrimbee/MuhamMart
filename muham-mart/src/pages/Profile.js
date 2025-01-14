@@ -4,6 +4,7 @@ import { Container, Typography, Box, Button, Card, CardContent, Avatar, Grid2 } 
 import { getAuth, signOut } from 'firebase/auth';
 import { useUser } from '../contexts/UserContext';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 
 const Profile = () => {
   const { user, setUser } = useUser();
@@ -47,9 +48,18 @@ const Profile = () => {
               </Grid2>
               {user && (
                 <>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 0 }}>
+                    <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
+                      {user ? user.vouchers : 0}
+                    </Typography>
+                    <Box sx={{ ml: 1, display: 'flex', alignItems: 'center' }}>
+                      <ConfirmationNumberIcon />
+                    </Box>
+                  </Box>
                   <Typography variant="body1" sx={{ mt: 2 }}>
                     <strong>Role:</strong> {user.role || 'User'}
                   </Typography>
+                  
                   <Button
                     variant="contained"
                     color="primary"

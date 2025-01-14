@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-import RedeemIcon from '@mui/icons-material/Redeem';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 
 const Header = () => {
   const { user } = useUser();
@@ -36,9 +36,9 @@ const Header = () => {
           <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
             {user ? user.vouchers : 0}
           </Typography>
-          <IconButton color="inherit">
-            <RedeemIcon />
-          </IconButton>
+          <Box sx={{ ml: 1, display: 'flex', alignItems: 'center' }}>
+            <ConfirmationNumberIcon />
+          </Box>
         </Toolbar>
       </AppBar>
     </>
