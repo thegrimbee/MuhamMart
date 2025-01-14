@@ -4,8 +4,7 @@ import { Container, TextField, Button, Typography, Box } from '@mui/material';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useFirestore } from '../contexts/FirestoreContext';
 import { addDoc } from 'firebase/firestore';
-import theme from '../theme.js';
-import { ThemeProvider } from '@emotion/react';
+
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -53,7 +52,6 @@ const Register = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
     <Container maxWidth="sm" t>
       <Box sx={{ mt: 8 }}>
         <Typography variant="h4" component="h1" gutterBottom>
@@ -96,7 +94,6 @@ const Register = () => {
         </form>
       </Box>
     </Container>
-    </ThemeProvider>
   );
 };
 
