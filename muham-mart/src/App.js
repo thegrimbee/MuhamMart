@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Store from './pages/Store';
 import About from './pages/About';
 import Products from './pages/Products';
+import Profile from './pages/Profile.js';
 import theme from './theme.js';
 import { ThemeProvider } from '@emotion/react';
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products/>} />
         <Route path="/store" element={<Store />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
     </ThemeProvider>

@@ -8,9 +8,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { useUser } from '../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
+import RedeemIcon from '@mui/icons-material/Redeem';
 
 const Header = () => {
   const { user } = useUser();
+  const navigate = useNavigate();
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
   return (
     <>
       <CssBaseline />
@@ -22,10 +28,16 @@ const Header = () => {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
-            {user ? user.email : 'Guest'}
+            {user ? user.name : 'Guest'}
+          </Typography>
+          <IconButton color="inherit" onClick={handleProfileClick}>
+            <AccountCircle />
+          </IconButton>
+          <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
+            {user ? user.vouchers : 0}
           </Typography>
           <IconButton color="inherit">
-            <AccountCircle />
+            <RedeemIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
