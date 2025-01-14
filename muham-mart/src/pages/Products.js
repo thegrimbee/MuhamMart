@@ -53,9 +53,11 @@ export default function Products() {
                                     alt={product.name}
                                 />
                                 <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div" color="inherit">
-                                        {product.name}
-                                    </Typography>
+                                    <a href={`/products/${product.name}`}>
+                                        <Typography gutterBottom variant="h5" component="div" color="inherit">
+                                            {product.name}
+                                        </Typography>        
+                                    </a>
                                     <Typography variant="body2" color="inherit">
                                         {product.description}
                                     </Typography>

@@ -10,6 +10,7 @@ import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 import theme from './theme.js'
 import { ThemeProvider } from '@mui/material/styles';
+import ProductDetails from './pages/ProductDetails';
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products/>} />
+          <Route path="/products/:id" element={<ProductDetails/>} />
         </Routes>
       </Router>
       <Footer/>
