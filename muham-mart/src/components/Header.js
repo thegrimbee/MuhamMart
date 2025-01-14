@@ -7,8 +7,10 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import { useUser } from '../contexts/UserContext';
 
 const Header = () => {
+  const { user } = useUser();
   return (
     <>
       <CssBaseline />
@@ -20,7 +22,7 @@ const Header = () => {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
-            Guest
+            {user ? user.email : 'Guest'}
           </Typography>
           <IconButton color="inherit">
             <AccountCircle />

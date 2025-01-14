@@ -48,6 +48,9 @@ const cards = [
 
 const Home = () => {
     const navigate = useNavigate();
+    const handleRegisterClick = () => {
+        navigate('/register');
+    };
     const handleSignInClick = () => {
         navigate('/login');
     };
@@ -93,6 +96,7 @@ const Home = () => {
                 spacing={2}
                 justifyContent="center"
                 >
+                <Button variant="contained" onClick={handleRegisterClick}>Register</Button>
                 <Button variant="contained" onClick={handleSignInClick}>Sign In</Button>
                 <Button variant="outlined" onClick={handleLearnMoreClick}>Learn More</Button>
                 </Stack>
