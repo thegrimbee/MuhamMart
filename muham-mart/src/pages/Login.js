@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useUser } from '../contexts/UserContext';
+import { useFirestore } from '../contexts/FirestoreContext';
+import { query, where, getDocs } from 'firebase/firestore';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const { setUser } = useUser();
+  const { usersCollection } = useFirestore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +22,19 @@ const Login = () => {
       // Sign in user with email and password
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      setUser(user);
+
+      // Fetch additional user information from Firestore
+      const q = query(usersCollection, where('uid', '==', user.uid));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0];
+        const userData = userDoc.data();
+        setUser({ ...user, ...userData });
+      } else {
+        console.error('No such user document!');
+      }
+
       // Redirect to dashboard or home page
       navigate('/store');
     } catch (error) {
