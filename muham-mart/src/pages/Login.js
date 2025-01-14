@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useUser } from '../contexts/UserContext';
-import theme from '../theme.js';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -80,6 +79,11 @@ const Login = () => {
               Login
             </Button>
           </form>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="body2">
+              Don't have an account? <Link to="/register">Register here</Link>
+            </Typography>
+          </Box>
         </Box>
       </Container>
     </>
