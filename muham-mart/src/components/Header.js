@@ -11,6 +11,7 @@ import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 
+
 const Header = () => {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -22,7 +23,9 @@ const Header = () => {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <ShoppingCartIcon sx={{ mr: 2 }} />
+          <a href="/products" style={{ textDecoration: 'none', color: 'white' }}>
+            <ShoppingCartIcon sx={{ mr: 2 }} />
+          </a>
           <Typography variant="h6" color="inherit" noWrap>
             MuhamMart
           </Typography>
