@@ -48,7 +48,7 @@ const Profile = () => {
               </Grid2>
               {user && (
                 <>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 0 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
                     <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
                       {user ? user.vouchers : 0}
                     </Typography>
