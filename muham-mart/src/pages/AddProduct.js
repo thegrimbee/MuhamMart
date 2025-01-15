@@ -16,6 +16,7 @@ const AddProduct = () => {
   const [productPrice, setProductPrice] = useState(0);
   const { user } = useUser();
   const { db } = useFirestore();
+  const [warningColor, setWarningColor] = useState('error');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,16 +34,18 @@ const AddProduct = () => {
   const uploadImageToImgur = async (image) => {
     const formData = new FormData();
     formData.append('image', image);
-
+    formData.append('type', 'file');
+    formData.append('title', 'Product Image');
+    formData.append('description', 'Image uploaded for a product');
     const response = await fetch('https://api.imgur.com/3/image', {
       method: 'POST',
       headers: {
-        Authorization: '8cfb89819041d42', // Replace with your Imgur client ID
+        Authorization: '6cf819d2fba3a2b', // Replace with your Imgur client ID
       },
       body: formData,
     });
-
     const data = await response.json();
+    console.log(data);
     return data.data.link;
   };
 
@@ -54,18 +57,22 @@ const AddProduct = () => {
       if (productImage) {
         imageUrl = await uploadImageToImgur(productImage);
       }
+      console.log('imageUrl:', imageUrl);
       await addDoc(collection(db, 'Items'), {
         name: productName,
         description: productDescription,
         price: productPrice,
+        url: imageUrl,
         createdAt: new Date(),
       });
+      setWarningColor('success');
       setMessage('Product added successfully!');
       setProductName('');
       setProductDescription('');
       setProductPrice(0);
     } catch (error) {
       console.error('Error adding product:', error);
+      setWarningColor('error');
       setMessage('Error adding product. Please try again.');
     }
   };
@@ -121,7 +128,7 @@ const AddProduct = () => {
               />
             </Box>
             {message && (
-              <Typography color="success" variant="body2" sx={{ mt: 2 }}>
+              <Typography color={warningColor} variant="body2" sx={{ mt: 2 }}>
                 {message}
               </Typography>
             )}

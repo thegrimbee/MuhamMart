@@ -39,8 +39,6 @@ export default function Products() {
   
       fetchProducts();
     }, [itemsCollection]);
-  
-    console.log(products);
     //render the data
     return (
         <>
@@ -79,7 +77,7 @@ export default function Products() {
                             <Card sx={{width: '250px'}}>
                                 <CardMedia
                                     component="img"
-                                    image={process.env.PUBLIC_URL +  '/assets/images/' +product.image}
+                                    image={product.url ? product.url : process.env.PUBLIC_URL +  '/assets/images/' +product.image}
                                     alt={product.name}
                                 />
                                 <CardContent>
