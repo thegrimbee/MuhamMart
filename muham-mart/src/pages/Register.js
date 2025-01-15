@@ -34,6 +34,8 @@ const Register = () => {
         name,
         email,
         vouchers: 0,
+        role: 'User',
+        roleRank: 0,
       });
 
       // Redirect to login page or dashboard
