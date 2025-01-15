@@ -6,6 +6,7 @@ import { getDocs } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@mui/material';
+import Header from '../components/Header';
 
 
 function AddButton() {
