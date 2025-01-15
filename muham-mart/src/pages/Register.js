@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { useFirestore } from '../contexts/FirestoreContext';
 import { addDoc } from 'firebase/firestore';
-import theme from '../theme.js';
-import { ThemeProvider } from '@emotion/react';
+
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -29,12 +28,16 @@ const Register = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      await sendEmailVerification(user);
+      
       // Add additional user information to Firestore
       await addDoc(usersCollection, {
         uid: user.uid,
         name,
         email,
         vouchers: 0,
+        role: 'User',
+        roleRank: 0,
       });
 
       // Redirect to login page or dashboard
@@ -53,7 +56,6 @@ const Register = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
     <Container maxWidth="sm" t>
       <Box sx={{ mt: 8 }}>
         <Typography variant="h4" component="h1" gutterBottom>
@@ -96,7 +98,6 @@ const Register = () => {
         </form>
       </Box>
     </Container>
-    </ThemeProvider>
   );
 };
 
