@@ -4,11 +4,11 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './components/Dashboard';
-import Store from './pages/Store';
 import About from './pages/About';
 import Products from './pages/Products';
 import Profile from './pages/Profile.js';
 import ProductRequest from './pages/ProductRequest.js';
+import ProductDetails from './pages/ProductDetails';
 import theme from './theme.js';
 import { ThemeProvider } from '@emotion/react';
 
@@ -23,9 +23,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products/>} />
-        <Route path="/store" element={<Store />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/product-request" element={<ProductRequest />} />
+        <Route path="/products/:id" element={<ProductDetails/>} />
       </Routes>
     </Router>
     </ThemeProvider>
