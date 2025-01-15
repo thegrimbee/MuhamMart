@@ -7,9 +7,9 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Header from '../components/Header';
+import AddToCart from '../utils/AddToCart';
 
-
-function AddButton() {
+function AddButton({ product }) {
     const [quantity, setQuantity] = useState(0);
 
     const handleAddToCart = () => {
@@ -47,7 +47,7 @@ function AddButton() {
                             +
                         </Button>
                     </Box>
-                    <Button variant="contained" color="primary" onClick={() => alert('Submitted!')}>
+                    <Button variant="contained" color="primary" onClick={() => AddToCart('Dat', product, quantity)}>
                         Submit
                     </Button>
                 </Box>
@@ -122,7 +122,7 @@ export default function ProductDetail() {
                                 }}
                             ></Box>
                             
-                            <AddButton/>                          
+                            <AddButton product={product}/>                          
                         </CardContent>
                         
                     </Card>
