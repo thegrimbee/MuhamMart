@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Container, Grid2, Card, CardContent, CardMedia, Typography } from '@mui/material';
-import muhammadiyahLogo from '../assets/images/muhammadiyah_logo.png';
 import Box from '@mui/material/Box';
 import { useFirestore } from '../contexts/FirestoreContext';
-import { collection, getDocs } from 'firebase/firestore';
+import { getDocs } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@mui/material';
@@ -82,6 +81,7 @@ export default function ProductDetail() {
 
     return (
     <>
+        <Header />
         <Box
             sx={{
                 bgcolor: 'background.paper',

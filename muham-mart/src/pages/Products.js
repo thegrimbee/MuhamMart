@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Container, Grid2, Card, CardContent, CardMedia, Typography } from '@mui/material';
-import muhammadiyahLogo from '../assets/images/muhammadiyah_logo.png';
 import Box from '@mui/material/Box';
 import { useFirestore } from '../contexts/FirestoreContext';
-import { collection, getDocs } from 'firebase/firestore';
+import { getDocs } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 export default function Products() {
 
     //get the data from firestore
@@ -20,7 +21,6 @@ export default function Products() {
           snapshot.forEach((doc) => {
             items.push(doc.data());
           });
-          console.log(items);
           setProducts(items);
         } catch (error) {
           console.error("Error fetching products: ", error);
@@ -34,6 +34,7 @@ export default function Products() {
     //render the data
     return (
         <>
+            <Header />
             <Box
             sx={{
                 bgcolor: 'background.paper',
@@ -66,7 +67,13 @@ export default function Products() {
                         </Grid2>
                     ))}
                 </Grid2>
+                <Box sx={{ mt: 4 }}>
+                <Typography variant="body2">
+                    <Link to="/product-request">I can't find the product I need</Link>.
+                </Typography>
+                </Box>
             </Container>
+            <Footer />
         </>
         
     );

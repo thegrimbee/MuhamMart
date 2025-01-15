@@ -45,7 +45,7 @@ const Login = () => {
       }
 
       // Redirect to dashboard or home page
-      navigate('/store');
+      navigate('/products');
     } catch (error) {
       // Check for specific error codes
       switch (error.code) {

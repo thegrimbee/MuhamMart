@@ -49,6 +49,7 @@ const Home = () => {
     };
     return (
         <ThemeProvider theme={theme}>
+        <Header />
         <CssBaseline />
         <main>
             {/* Hero unit */}
