@@ -8,6 +8,56 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@mui/material';
 
+
+function AddButton() {
+    const [quantity, setQuantity] = useState(0);
+
+    const handleAddToCart = () => {
+        setQuantity(1);
+    };
+
+    const handleIncrement = () => {
+        setQuantity(quantity + 1);
+    };
+
+    const handleDecrement = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        } else {
+            setQuantity(0);
+        }
+    };
+
+    return (
+        <>
+            {quantity === 0 ? (
+                <Button id="addToCartButton" variant="contained" color="primary" onClick={handleAddToCart}>
+                    Add to cart
+                </Button>
+            ) : (
+                <Box display="flex" flexDirection="column" alignItems="center" gap={0.5}>
+                    <Box display="flex" alignItems="center" gap={2} mb={1}>
+                        <Button variant="contained" color="primary" onClick={handleDecrement}>
+                            -
+                        </Button>
+                        <Typography variant="h6" component="div">
+                            {quantity}
+                        </Typography>
+                        <Button variant="contained" color="primary" onClick={handleIncrement}>
+                            +
+                        </Button>
+                    </Box>
+                    <Button variant="contained" color="primary" onClick={() => alert('Submitted!')}>
+                        Submit
+                    </Button>
+                </Box>
+            )}
+        </>
+    );
+}
+
+
+
 export default function ProductDetail() {
     //get the data from firestore
         const [product, setProduct] = useState({});
@@ -70,10 +120,8 @@ export default function ProductDetail() {
                                     pt: 2
                                 }}
                             ></Box>
-
-                            <Button variant="contained" color="primary" >
-                                Add to cart
-                            </Button>
+                            
+                            <AddButton/>                          
                         </CardContent>
                         
                     </Card>
