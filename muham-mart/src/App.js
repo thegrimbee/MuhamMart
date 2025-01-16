@@ -12,6 +12,7 @@ import AddProduct from './pages/AddProduct.js';
 import theme from './theme.js';
 import { ThemeProvider } from '@emotion/react';
 import { useUser } from './contexts/UserContext.js';
+import RegisterSuccess from './pages/RegisterSuccess.js';
 
 function App() {
   const { user } = useUser();
