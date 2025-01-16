@@ -2,13 +2,14 @@ import * as React from 'react';
 import { Container, Grid2, Card, CardContent, CardMedia, Typography, TextField, Button, IconButton } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useFirestore } from '../contexts/FirestoreContext';
-import { doc, getDoc, updateDoc, getDocs } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import EditIcon from '@mui/icons-material/Edit';
 import { useUser } from '../contexts/UserContext';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function ProductDetail() {
     //get the data from firestore
@@ -18,6 +19,7 @@ export default function ProductDetail() {
     const [editedProduct, setEditedProduct] = useState({});
     const { user } = useUser();
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -58,6 +60,16 @@ export default function ProductDetail() {
         console.error("Error updating product: ", error);
     }
     };
+
+    const handleDelete = async () => {
+        try {
+          await deleteDoc(doc(itemsCollection, id));
+          navigate('/products'); // Redirect to products page after deletion
+        } catch (error) {
+          console.error("Error deleting product: ", error);
+        }
+      };
+    
     return (
     <>
         <Header />
@@ -130,6 +142,11 @@ export default function ProductDetail() {
                                         {user && user.roleRank > 0 && (
                                             <IconButton color="inherit" onClick={handleEditToggle}>
                                                 <EditIcon />
+                                            </IconButton>
+                                        )}
+                                        {user && user.roleRank > 0 && (
+                                            <IconButton color="inherit" onClick={handleDelete}>
+                                                <DeleteIcon />
                                             </IconButton>
                                         )}
                                     </Box>
