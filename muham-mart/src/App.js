@@ -28,6 +28,7 @@ function App() {
         <Route path="/product-request" element={<ProductRequest />} />
         <Route path="/products/:id" element={<ProductDetails/>} />
         <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/register/success" element={<RegisterSuccess />} />
       </Routes>
     </Router>
     </ThemeProvider>
