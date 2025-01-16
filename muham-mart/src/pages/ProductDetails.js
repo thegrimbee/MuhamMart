@@ -4,14 +4,18 @@ import Box from '@mui/material/Box';
 import { useFirestore } from '../contexts/FirestoreContext';
 import { getDocs } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Header from '../components/Header';
 import AddToCart from '../utils/AddToCart';
+import { useUser } from '../contexts/UserContext';
+
 
 function AddButton({ product }) {
     const [quantity, setQuantity] = useState(0);
-
+    const { user } = useUser();
+    const navigate = useNavigate();
+    
     const handleAddToCart = () => {
         setQuantity(1);
     };
@@ -26,6 +30,11 @@ function AddButton({ product }) {
         } else {
             setQuantity(0);
         }
+    };
+
+    const handleAddingToCart = async () => {
+        await AddToCart(user ? user.uid : null, product, quantity);
+        navigate('/products'); // Redirect to the products page
     };
 
     return (
@@ -47,7 +56,7 @@ function AddButton({ product }) {
                             +
                         </Button>
                     </Box>
-                    <Button variant="contained" color="primary" onClick={() => AddToCart('Dat', product, quantity)}>
+                    <Button variant="contained" color="primary" onClick={handleAddingToCart}>
                         Submit
                     </Button>
                 </Box>
