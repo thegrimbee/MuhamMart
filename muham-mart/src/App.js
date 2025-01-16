@@ -13,6 +13,7 @@ import theme from './theme.js';
 import { ThemeProvider } from '@emotion/react';
 import { useUser } from './contexts/UserContext.js';
 import RegisterSuccess from './pages/RegisterSuccess.js';
+import Users from './pages/Users.js';
 
 function App() {
   const { user } = useUser();
@@ -30,6 +31,7 @@ function App() {
         <Route path="/products/:id" element={<ProductDetails/>} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/register/success" element={<RegisterSuccess />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
     </Router>
     </ThemeProvider>
