@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Grid2, Card, CardContent, CardMedia, Typography, IconButton, Divider } from '@mui/material';
+import { Container, Grid2, Card, CardContent, CardMedia, Typography, IconButton, Divider, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useFirestore } from '../contexts/FirestoreContext';
 import { getDocs } from 'firebase/firestore';
@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const { itemsCollection } = useFirestore();
     const { user } = useUser();
     const navigate = useNavigate();
@@ -37,6 +38,15 @@ export default function Products() {
   
       fetchProducts();
     }, [itemsCollection]);
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredProducts = products.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     //render the data
     return (
         <>
@@ -69,8 +79,16 @@ export default function Products() {
                     <Divider sx={{ my: 4 }} />
                 </>
                 )}
+                <TextField
+                    label="Search Products"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
                 <Grid2 container spacing={4}>
-                    {products.map((product) => (
+                    {filteredProducts.map((product) => (
                         <Grid2 item key={product.id} xs={12} sm={6} md={4}>
                             <Card sx={{width: '250px'}}>
                                 <CardMedia
