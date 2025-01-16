@@ -8,6 +8,7 @@ import Products from './pages/Products';
 import Profile from './pages/Profile.js';
 import ProductRequest from './pages/ProductRequest.js';
 import ProductDetails from './pages/ProductDetails';
+import AddProduct from './pages/AddProduct.js';
 import theme from './theme.js';
 import { ThemeProvider } from '@emotion/react';
 import { useUser } from './contexts/UserContext.js';
@@ -26,6 +27,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/product-request" element={<ProductRequest />} />
         <Route path="/products/:id" element={<ProductDetails/>} />
+        <Route path="/add-product" element={<AddProduct />} />
       </Routes>
     </Router>
     </ThemeProvider>

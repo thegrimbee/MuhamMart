@@ -13,7 +13,6 @@ const FirestoreProvider = ({ children }) => {
     Snapshot.forEach((doc) => {
       items.push({...doc.data(), id: doc.id});
     });
-    console.log(items);
   });
   return (
     <FirestoreContext.Provider value={{ db, itemsCollection, usersCollection, cartsCollection }}>
