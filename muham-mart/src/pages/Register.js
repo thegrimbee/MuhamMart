@@ -41,7 +41,7 @@ const Register = () => {
       });
 
       // Redirect to login page or dashboard
-      navigate('/login');
+      navigate('/register/success');
     } catch (error) {
       // Check for specific error codes
       if (error.code === 'auth/email-already-in-use') {
