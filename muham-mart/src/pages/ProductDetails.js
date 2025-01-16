@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import EditIcon from '@mui/icons-material/Edit';
+import { useUser } from '../contexts/UserContext';
 
 export default function ProductDetail() {
     //get the data from firestore
@@ -15,7 +16,9 @@ export default function ProductDetail() {
     const { itemsCollection } = useFirestore();
     const [isEditing, setIsEditing] = useState(false);
     const [editedProduct, setEditedProduct] = useState({});
+    const { user } = useUser();
     const { id } = useParams();
+
     useEffect(() => {
         const fetchProducts = async () => {
         try {
@@ -33,12 +36,16 @@ export default function ProductDetail() {
     }, [id, itemsCollection]);
 
     const handleEditToggle = () => {
-        setIsEditing(!isEditing);
-      };
+        if (user && user.roleRank > 0) {
+            setIsEditing(!isEditing);
+        } else {
+        console.warn("You do not have permission to edit this item.");
+        }
+    };
     
     const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditedProduct({ ...editedProduct, [name]: value });
+        const { name, value } = e.target;
+        setEditedProduct({ ...editedProduct, [name]: value });
     };
 
     const handleFormSubmit = async (e) => {
@@ -76,7 +83,7 @@ export default function ProductDetail() {
                 <Grid2 item xs={12} sm={6}>
                     <Card>
                         <CardContent sx = {{display: 'flex', flexDirection: 'column', maxWidth: '400px'}}>
-                            {isEditing ? (
+                            {isEditing && user && user.roleRank > 0 ? (
                                 <form onSubmit={handleFormSubmit}>
                                 <TextField
                                   label="Product Name"
@@ -120,9 +127,11 @@ export default function ProductDetail() {
                                         <Typography variant="h5" component="div">
                                             {product.name}
                                         </Typography>
-                                        <IconButton color="inherit" onClick={handleEditToggle}>
-                                            <EditIcon />
-                                        </IconButton>
+                                        {user && user.roleRank > 0 && (
+                                            <IconButton color="inherit" onClick={handleEditToggle}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        )}
                                     </Box>
                                     <Typography variant="h6" color="text.secondary">
                                         Description: {product.description}
