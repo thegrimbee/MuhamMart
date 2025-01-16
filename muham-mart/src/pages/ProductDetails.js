@@ -15,7 +15,7 @@ function AddButton({ product }) {
     const [quantity, setQuantity] = useState(0);
     const { user } = useUser();
     const navigate = useNavigate();
-    
+
     const handleAddToCart = () => {
         setQuantity(1);
     };
@@ -88,7 +88,9 @@ export default function ProductDetail() {
       
           fetchProducts();
         }, [itemsCollection]);
-
+    
+    console.log(product.name);
+    
     return (
     <>
         <Header />
