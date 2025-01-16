@@ -13,8 +13,6 @@ import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function Products() {
-
-    //get the data from firestore
     const [products, setProducts] = useState([]);
     const { itemsCollection } = useFirestore();
     const { user } = useUser();
@@ -29,7 +27,7 @@ export default function Products() {
           const snapshot = await getDocs(itemsCollection);
           const items = [];
           snapshot.forEach((doc) => {
-            items.push(doc.data());
+            items.push({id: doc.id, ...doc.data() });
           });
           setProducts(items);
         } catch (error) {
@@ -81,7 +79,7 @@ export default function Products() {
                                     alt={product.name}
                                 />
                                 <CardContent>
-                                    <a href={`/products/${product.name}`} style={{textDecoration: 'none', color: 'inherit'}}>
+                                    <a href={`/products/${product.id}`} style={{textDecoration: 'none', color: 'inherit'}}>
                                         <Typography gutterBottom variant="h5" component="div" color="inherit">
                                             {product.name}
                                         </Typography>        

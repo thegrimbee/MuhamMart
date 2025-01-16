@@ -31,22 +31,26 @@ const AddProduct = () => {
     }
   };
 
-  const uploadImageToImgur = async (image) => {
+  const uploadImageToCloudinary = async (image) => {
     const formData = new FormData();
-    formData.append('image', image);
-    formData.append('type', 'file');
-    formData.append('title', 'Product Image');
-    formData.append('description', 'Image uploaded for a product');
-    const response = await fetch('https://api.imgur.com/3/image', {
-      method: 'POST',
-      headers: {
-        Authorization: '6cf819d2fba3a2b', // Replace with your Imgur client ID
-      },
-      body: formData,
-    });
-    const data = await response.json();
-    console.log(data);
-    return data.data.link;
+    formData.append('file', image);
+    formData.append('upload_preset', 'MuhamMart'); // Replace with your upload preset
+
+    try {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/denifdt5c/upload`, { // Replace with your cloud name
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data.secure_url; // Return the URL of the uploaded image
+    } catch (error) {
+      console.error('Error uploading image to Cloudinary:', error);
+      throw error;
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -55,9 +59,8 @@ const AddProduct = () => {
     try {
       let imageUrl = '';
       if (productImage) {
-        imageUrl = await uploadImageToImgur(productImage);
+        imageUrl = await uploadImageToCloudinary(productImage);
       }
-      console.log('imageUrl:', imageUrl);
       await addDoc(collection(db, 'Items'), {
         name: productName,
         description: productDescription,
@@ -70,6 +73,7 @@ const AddProduct = () => {
       setProductName('');
       setProductDescription('');
       setProductPrice(0);
+      
     } catch (error) {
       console.error('Error adding product:', error);
       setWarningColor('error');
