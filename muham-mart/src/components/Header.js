@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-
+import PeopleIcon from '@mui/icons-material/People';
 
 const Header = () => {
   const { user } = useUser();
@@ -18,6 +18,9 @@ const Header = () => {
   const handleProfileClick = () => {
     navigate('/profile');
   };
+  const handleManageUsersClick = () => {
+    navigate('/users');
+  }
   return (
     <>
       <CssBaseline />
@@ -28,6 +31,19 @@ const Header = () => {
               MuhamMart
             </Typography>
           </a>
+          <Typography variant="h6" color="inherit" noWrap>
+            MuhamMart
+          </Typography>
+          {user && user.roleRank > 0 && (
+            <>
+              <IconButton color="inherit" sx={{ml:2}}onClick={handleManageUsersClick}>
+                <PeopleIcon />
+              </IconButton>
+              <Typography>
+                Manage Users
+              </Typography>
+            </>
+          )}
           <Box sx={{ flexGrow: 1 }} />
           <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
             {user ? user.name : 'Guest'}

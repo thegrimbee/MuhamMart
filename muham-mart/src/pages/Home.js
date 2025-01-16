@@ -10,7 +10,6 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme.js'
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +47,7 @@ const Home = () => {
         navigate('/about');
     };
     return (
-        <ThemeProvider theme={theme}>
+        <>
         <Header />
         <CssBaseline />
         <main>
@@ -74,7 +73,7 @@ const Home = () => {
                     component="img"
                     image={muhammadiyahLogo} // Use imported logo
                     alt="Muhammadiyah Logo"
-                    sx={{ width: '200px', margin: '0 auto', pt: 2 }}
+                    sx={{ width: '400px', margin: '0 auto', pt: 2 }}
                 />
                 <Typography variant="h5" align="center" color="text.secondary">
                 Your one-stop shop for all your needs. Earn vouchers, shop products,
@@ -113,7 +112,8 @@ const Home = () => {
             </Grid2>
             </Container>
         </main>
-        </ThemeProvider>
+        <Footer />
+        </>
     );
 }
 
