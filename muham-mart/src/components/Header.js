@@ -2,7 +2,6 @@ import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -11,6 +10,7 @@ import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import PeopleIcon from '@mui/icons-material/People';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 
 const Header = () => {
   const { user } = useUser();
@@ -21,22 +21,25 @@ const Header = () => {
   const handleManageUsersClick = () => {
     navigate('/users');
   }
+  const handleStoreClick = () => {
+    navigate('/products');
+  }
   return (
     <>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
+          <IconButton color="inherit" sx={{ mr: 2 }} onClick={handleStoreClick}>
+            <StorefrontIcon />
+          </IconButton>
           <a href="/products" style={{ textDecoration: 'none', color: 'white' }}>
             <Typography variant="h6" color="inherit" noWrap>
               MuhamMart
             </Typography>
           </a>
-          <Typography variant="h6" color="inherit" noWrap>
-            MuhamMart
-          </Typography>
           {user && user.roleRank > 0 && (
             <>
-              <IconButton color="inherit" sx={{ml:2}}onClick={handleManageUsersClick}>
+              <IconButton color="inherit" sx={{ml:20}}onClick={handleManageUsersClick}>
                 <PeopleIcon />
               </IconButton>
               <Typography>
@@ -57,12 +60,6 @@ const Header = () => {
           <Box sx={{ ml: 1, mr: 6, display: 'flex', alignItems: 'center' }}>
             <ConfirmationNumberIcon />
           </Box>
-          <Box sx={{ ml: 1, display: 'flex', alignItems: 'center' }}>
-            <a href="/my-cart" style={{ textDecoration: 'none', color: 'white' }}>
-              <ShoppingCartIcon sx={{ mr: 2 }} />
-            </a>
-          </Box>
-          
         </Toolbar>
       </AppBar>
     </>

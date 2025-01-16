@@ -58,7 +58,7 @@ function AddButton({ product }) {
                         </Button>
                     </Box>
                     <Button variant="contained" color="primary" onClick={handleAddingToCart}>
-                        Submit
+                        Add to cart
                     </Button>
                 </Box>
             )}
@@ -81,8 +81,8 @@ export default function ProductDetail() {
         try {
             const productDoc = await getDoc(doc(itemsCollection, id));
             if (productDoc.exists()) {
-                setProduct(productDoc.data());
-                setEditedProduct(productDoc.data());
+                setProduct({id: id, ...productDoc.data() });
+                setEditedProduct({id: id, ...productDoc.data() });
             }
         } catch (error) {
             console.error("Error fetching products: ", error);

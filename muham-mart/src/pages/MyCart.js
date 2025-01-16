@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useUser } from '../contexts/UserContext';
 import { useFirestore } from '../contexts/FirestoreContext';
-import { collection, getDocs } from 'firebase/firestore';
+import { getDocs } from 'firebase/firestore';
 import { Card, CardContent, CardMedia, Typography, Grid2, Box } from '@mui/material';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 const MyCart =  () => {
     const { user } = useUser();
     const { cartsCollection } = useFirestore();
@@ -21,11 +21,9 @@ const MyCart =  () => {
                 for (const doc of itemsSnapshot.docs) {
                     items[doc.id] = doc.data();
                 }
-                console.log(items);
                 const cartItems = [];
                 carts.forEach(cart => {
                         if (cart.user === user.uid) {
-                            console.log(cart);
                             const itemIds = Object.keys(cart);
                             itemIds.forEach(itemId => {
                                 if (itemId !== 'user') {
@@ -35,7 +33,6 @@ const MyCart =  () => {
                             
                         }
                     });
-                console.log(cartItems);
                 setCartItems(cartItems);
             }
         };
@@ -63,7 +60,7 @@ const MyCart =  () => {
                                 <CardMedia
                                     component="img"
                                     height="140"
-                                    image={process.env.PUBLIC_URL + '/assets/images/' + item.image}
+                                    image={item.url ? item.url : process.env.PUBLIC_URL + '/assets/images/' + item.image}
                                     alt={item.name}
                                 />
                             </Grid2>
@@ -73,9 +70,14 @@ const MyCart =  () => {
                                     <Typography variant="body2" color="textSecondary">
                                         Quantity: {item.quantity}
                                     </Typography>
-                                    <Typography variant="body2" color="textSecondary">
-                                        Price: ${item.price}
-                                    </Typography>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 0 }}>
+                                        <Typography variant="body2" color="text.secondary">
+                                            Price: {item.price}
+                                        </Typography>
+                                        <Box sx={{ ml: 0.5, display: 'flex', alignItems: 'center' }}>
+                                            <ConfirmationNumberIcon/>
+                                        </Box>
+                                    </Box> 
                                 </CardContent>
                             </Grid2>
                         </Grid2>
@@ -93,8 +95,11 @@ const MyCart =  () => {
             }}
         >
             <Typography variant="h4" align='center' >
-                <b>Total Cost: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</b>
+                <b>Total Cost: {cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</b>
             </Typography>
+            <Box sx={{ ml: 1, display: 'flex', alignItems: 'center' }}>
+                <ConfirmationNumberIcon sx={{ fontSize: 40 }}/>
+            </Box>
         </Box>
         <Footer />
     </>

@@ -12,27 +12,23 @@ const AddToCart = async (userId, product, quantity) => {
 
   try {
     const cartRef = collection(db, 'Carts');
-    console.log(product);
     const q = query(cartRef, where('user', '==', userId));
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
-        console.log('User already has a cart');
         // Get the document ID of the existing cart
         const cartDocId = querySnapshot.docs[0].id;
         const cartDocRef = doc(db, 'Carts', cartDocId);
-        console.log(product);
         // Update the existing cart document by adding a new field for the product
         await updateDoc(cartDocRef, {
-          [product.name]: querySnapshot.docs[0].data()[product.name] ? querySnapshot.docs[0].data()[product.name] + quantity : quantity,
+          [product.id]: querySnapshot.docs[0].data()[product.id] ? querySnapshot.docs[0].data()[product.id] + quantity : quantity,
         });
     }
     else {
         await addDoc(cartRef, {
             user: userId,
-            [product.name]: quantity
+            [product.id]: quantity
         });
-        console.log('Item added to cart');
     }
     
     

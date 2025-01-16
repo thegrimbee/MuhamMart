@@ -11,6 +11,7 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import AddIcon from '@mui/icons-material/Add';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
@@ -47,6 +48,10 @@ export default function Products() {
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const handleCartClick = () => {
+        navigate('/my-cart');
+    }
+
     //render the data
     return (
         <>
@@ -79,14 +84,19 @@ export default function Products() {
                     <Divider sx={{ my: 4 }} />
                 </>
                 )}
-                <TextField
-                    label="Search Products"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                />
+                <Box sx={{ mb: 4, display: 'flex', justifyContent: 'center' }}>
+                    <TextField
+                        label="Search Products"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                    />
+                    <IconButton color="primary" sx={{ ml: 2 }} onClick={handleCartClick}>  
+                        <ShoppingCartIcon />
+                    </IconButton>
+                </Box>
                 <Grid2 container spacing={4}>
                     {filteredProducts.map((product) => (
                         <Grid2 item key={product.id} xs={12} sm={6} md={4}>
