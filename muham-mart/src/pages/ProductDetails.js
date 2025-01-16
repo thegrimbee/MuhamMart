@@ -5,11 +5,66 @@ import { useFirestore } from '../contexts/FirestoreContext';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import AddToCart from '../utils/AddToCart';
 import Header from '../components/Header';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import EditIcon from '@mui/icons-material/Edit';
 import { useUser } from '../contexts/UserContext';
 import DeleteIcon from '@mui/icons-material/Delete';
+
+function AddButton({ product }) {
+    const [quantity, setQuantity] = useState(0);
+    const { user } = useUser();
+    const navigate = useNavigate();
+
+    const handleAddToCart = () => {
+        setQuantity(1);
+    };
+
+    const handleIncrement = () => {
+        setQuantity(quantity + 1);
+    };
+
+    const handleDecrement = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        } else {
+            setQuantity(0);
+        }
+    };
+
+    const handleAddingToCart = async () => {
+        await AddToCart(user ? user.uid : null, product, quantity);
+        navigate('/products'); // Redirect to the products page
+    };
+
+    return (
+        <>
+            {quantity === 0 ? (
+                <Button id="addToCartButton" variant="contained" color="primary" onClick={handleAddToCart}>
+                    Add to cart
+                </Button>
+            ) : (
+                <Box display="flex" flexDirection="column" alignItems="center" gap={0.5}>
+                    <Box display="flex" alignItems="center" gap={2} mb={1}>
+                        <Button variant="contained" color="primary" onClick={handleDecrement}>
+                            -
+                        </Button>
+                        <Typography variant="h6" component="div">
+                            {quantity}
+                        </Typography>
+                        <Button variant="contained" color="primary" onClick={handleIncrement}>
+                            +
+                        </Button>
+                    </Box>
+                    <Button variant="contained" color="primary" onClick={handleAddingToCart}>
+                        Submit
+                    </Button>
+                </Box>
+            )}
+        </>
+    );
+}
 
 export default function ProductDetail() {
     //get the data from firestore
@@ -167,9 +222,7 @@ export default function ProductDetail() {
                                             pt: 2
                                         }}
                                     ></Box>
-                                    <Button variant="contained" color="primary" >
-                                        Add to cart
-                                    </Button>
+                                    <AddButton product={product}/>  
                                 </>
                               )}      
                         </CardContent>

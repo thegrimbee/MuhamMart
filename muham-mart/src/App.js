@@ -11,6 +11,7 @@ import ProductDetails from './pages/ProductDetails';
 import AddProduct from './pages/AddProduct.js';
 import theme from './theme.js';
 import { ThemeProvider } from '@emotion/react';
+import MyCart from './pages/MyCart';
 import { useUser } from './contexts/UserContext.js';
 import RegisterSuccess from './pages/RegisterSuccess.js';
 import Users from './pages/Users.js';
@@ -29,6 +30,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/product-request" element={<ProductRequest />} />
         <Route path="/products/:id" element={<ProductDetails/>} />
+        <Route path="/my-cart" element={<MyCart />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/register/success" element={<RegisterSuccess />} />
         <Route path="/users" element={<Users />} />
