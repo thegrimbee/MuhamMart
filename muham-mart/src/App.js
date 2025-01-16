@@ -11,6 +11,7 @@ import ProductRequest from './pages/ProductRequest.js';
 import ProductDetails from './pages/ProductDetails';
 import theme from './theme.js';
 import { ThemeProvider } from '@emotion/react';
+import MyCart from './pages/MyCart';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/product-request" element={<ProductRequest />} />
         <Route path="/products/:id" element={<ProductDetails/>} />
+        <Route path="/my-cart" element={<MyCart />} />
       </Routes>
     </Router>
     </ThemeProvider>

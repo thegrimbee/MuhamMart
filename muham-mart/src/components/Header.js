@@ -24,11 +24,10 @@ const Header = () => {
       <AppBar position="relative">
         <Toolbar>
           <a href="/products" style={{ textDecoration: 'none', color: 'white' }}>
-            <ShoppingCartIcon sx={{ mr: 2 }} />
+            <Typography variant="h6" color="inherit" noWrap>
+              MuhamMart
+            </Typography>
           </a>
-          <Typography variant="h6" color="inherit" noWrap>
-            MuhamMart
-          </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
             {user ? user.name : 'Guest'}
@@ -39,9 +38,15 @@ const Header = () => {
           <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
             {user ? user.vouchers : 0}
           </Typography>
-          <Box sx={{ ml: 1, display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ ml: 1, mr: 6, display: 'flex', alignItems: 'center' }}>
             <ConfirmationNumberIcon />
           </Box>
+          <Box sx={{ ml: 1, display: 'flex', alignItems: 'center' }}>
+            <a href="/my-cart" style={{ textDecoration: 'none', color: 'white' }}>
+              <ShoppingCartIcon sx={{ mr: 2 }} />
+            </a>
+          </Box>
+          
         </Toolbar>
       </AppBar>
     </>
