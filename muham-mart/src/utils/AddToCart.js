@@ -21,7 +21,7 @@ const AddToCart = async (userId, product, quantity) => {
         const cartDocRef = doc(db, 'Carts', cartDocId);
         // Update the existing cart document by adding a new field for the product
         await updateDoc(cartDocRef, {
-          [product.id]: querySnapshot.docs[0].data()[product.id] ? querySnapshot.docs[0].data()[product.id] + quantity : quantity,
+          [product.id]: quantity,
         });
     }
     else {
