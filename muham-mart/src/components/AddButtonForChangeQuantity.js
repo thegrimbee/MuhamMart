@@ -64,7 +64,7 @@ export default function AddButton({ product }) {
         console.log('askdfhhuia fuiqeg')
         console.log(quantity);
         await AddToCart(user ? user.uid : null, product, quantity);
-        //window.location.reload();
+        window.location.reload();
     };
     
     return (
