@@ -14,8 +14,8 @@ Other than learning the tech stack we used, we learnt more about how to build a 
 We hope to work with Muhammadiyah Welfare Home if our project is good enough
 
 ## Team Members
-Gabriel Mario Antaputra
-Le Tu Quoc Dat
-Nguyen Le Quoc Hung
+Gabriel Mario Antaputra <br>
+Le Tu Quoc Dat <br>
+Nguyen Le Quoc Hung <br>
 
 shoutout to Warren Branson Tanaka the goat
