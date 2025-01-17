@@ -1,22 +1,21 @@
 import * as React from 'react';
 import { useUser } from '../contexts/UserContext';
 import { useFirestore } from '../contexts/FirestoreContext';
-import { getDocs } from 'firebase/firestore';
-import { Card, CardContent, CardMedia, Typography, Grid2, Box, Modal, Button } from '@mui/material';
+import { getDocs, addDoc, deleteDoc, updateDoc, collection, doc } from 'firebase/firestore';
+import { Card, CardContent, CardMedia, Typography, Grid2, Box, Modal, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-import ProductDetails from './ProductDetails.js';
 import ChangeQuantity from '../components/ChangeQuantity.js';
-
+import { useNavigate } from 'react-router-dom';
 const MyCart =  () => {
     const { user } = useUser();
-    const { cartsCollection } = useFirestore();
+    const navigate = useNavigate();
+    const { usersCollection, cartsCollection, itemsCollection, db } = useFirestore();
     const [cartItems, setCartItems] = React.useState([]);
-    const { itemsCollection } = useFirestore();
     const [open, setOpen] = React.useState(false);
+    const [confirmOpen, setConfirmOpen] = React.useState(false);
     const [selectedItem, setSelectedItem] = React.useState(null);
-  
+    const [cartId, setCartId] = React.useState(0);
     const handleOpen = (item) => {
       setSelectedItem(item);
       setOpen(true);
@@ -32,7 +31,7 @@ const MyCart =  () => {
             if (user) {
                 const cartSnapshot = await getDocs(cartsCollection);
                 const itemsSnapshot = await getDocs(itemsCollection);
-                const carts = cartSnapshot.docs.map(doc => ({ ...doc.data() }));
+                const carts = cartSnapshot.docs.map(doc => ({id: doc.id, ...doc.data() }));
                 const items = {};
                 for (const doc of itemsSnapshot.docs) {
                     items[doc.id] = doc.data();
@@ -40,9 +39,10 @@ const MyCart =  () => {
                 const cartItems = [];
                 carts.forEach(cart => {
                         if (cart.user === user.uid) {
+                            setCartId(cart.id);
                             const itemIds = Object.keys(cart);
                             itemIds.forEach(itemId => {
-                                if (itemId !== 'user') {
+                                if (itemId !== 'user' && itemId !== 'id') {
                                     cartItems.push({ ...items[itemId], id: itemId, quantity: cart[itemId] });
                                 }
                             });
@@ -54,9 +54,40 @@ const MyCart =  () => {
         };
 
         fetchCartItems();
-    }, [user, cartsCollection]);
+    }, [user, cartsCollection, itemsCollection]);
     
+    const handlePurchaseClick = () => {
+        setConfirmOpen(true);
+    };
 
+    const handleConfirmClose = () => {
+        setConfirmOpen(false);
+    };
+    const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    const handleConfirmPurchase = async () => {
+        try {
+            const transaction = {
+                time: new Date(),
+                items: cartItems.reduce((acc, item) => {
+                acc[item.id] = item.quantity;
+                return acc;
+                }, {}),
+                user: user.uid
+            };
+            await addDoc(collection(db, 'Transactions'), transaction);
+            // Optionally, clear the cart or provide feedback to the user
+            // Delete the cart document to clear the cart
+            const userCartDoc = doc(cartsCollection, cartId);
+            await deleteDoc(userCartDoc);
+            const userDoc = doc(usersCollection, user.id);
+            await updateDoc(userDoc, {
+                vouchers: user.vouchers - totalPrice
+            });
+            navigate('/products');
+        } catch (error) {
+          console.error("Error processing transaction: ", error);
+        }
+      };
     return (
         <>
         <Header/>
@@ -137,12 +168,33 @@ const MyCart =  () => {
             }}
         >
             <Typography variant="h4" align='center' >
-                <b>Total Cost: {cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</b>
+                <b>Total Cost: {totalPrice}</b>
             </Typography>
             <Box sx={{ ml: 1, display: 'flex', alignItems: 'center' }}>
                 <ConfirmationNumberIcon sx={{ fontSize: 40 }}/>
             </Box>
         </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <Button variant="contained" color="primary" onClick={handlePurchaseClick}>
+              Purchase
+            </Button>
+        </Box>
+        <Dialog open={confirmOpen} onClose={handleConfirmClose}>
+            <DialogTitle>Confirm Purchase</DialogTitle>
+            <DialogContent>
+            <DialogContentText>
+                Please recheck your items before proceeding with the purchase.
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleConfirmClose} color="primary">
+                Cancel
+            </Button>
+            <Button onClick={handleConfirmPurchase} color="primary">
+                Continue
+            </Button>
+            </DialogActions>
+        </Dialog>
     </>
     );
 };

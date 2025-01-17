@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Container, Typography, Box, Button, Card, CardContent, Avatar, Grid2 } from '@mui/material';
 import { getAuth, signOut } from 'firebase/auth';
 import { useUser } from '../contexts/UserContext';
+import { useFirestore } from '../contexts/FirestoreContext';
+import { getDocs, collection, query, where } from 'firebase/firestore'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-
+import ProductDetails from './ProductDetails.js'
+import Header from '../components/Header.js';
 const Profile = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
   const auth = getAuth();
+  const { transactionsCollection } = useFirestore();
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      if (user) {
+        const q = query(transactionsCollection, where('user', '==', user.uid));
+        const querySnapshot = await getDocs(q);
+        const transactionsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setTransactions(transactionsList);
+      }
+    };
+    fetchTransactions();
+  }, [user, transactionsCollection]);
 
   const handleLogout = async () => {
     try {
@@ -23,6 +40,7 @@ const Profile = () => {
 
   return (
     <>
+      <Header/>
       <Container maxWidth="sm">
         <Box sx={{ mt: 8 }}>
           <Card>
@@ -72,6 +90,34 @@ const Profile = () => {
               )}
             </CardContent>
           </Card>
+          <Box sx={{ mt: 4 }}>
+                <Typography variant="h6">Transaction History</Typography>
+                {transactions.length > 0 ? (
+                  <Box sx={{ mt: 2 }}>
+                    {transactions.map(transaction => (
+                      <Card key={transaction.id} sx={{ mb: 2 }}>
+                        <CardContent>
+                          <Typography variant="body1">
+                            <b>Date:</b> {new Date(transaction.time.seconds * 1000).toLocaleString()}
+                          </Typography>
+                          <Typography variant="body1">
+                            <b>Items:</b>
+                          </Typography>
+                          <ul>
+                            {Object.entries(transaction.items).map(([itemId, quantity]) => (
+                              <li key={itemId}>
+                                <ProductDetails id={itemId} haveAddToCart={false} imageSize={"190"} quantity={quantity}/>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </Box>
+                ) : (
+                  <Typography variant="body2">No transactions found.</Typography>
+                )}
+              </Box>
         </Box>
       </Container>
     </>

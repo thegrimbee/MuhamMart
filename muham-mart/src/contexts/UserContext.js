@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
         if (!querySnapshot.empty) {
           const authUserDoc = querySnapshot.docs[0];
           const authUserData = authUserDoc.data();
-          setUser({ ...authUser, ...authUserData });
+          setUser({ id: authUserDoc ? authUserDoc.id : null, ...authUser, ...authUserData });
         } else {
           console.error('No such user document!');
         }
