@@ -15,7 +15,6 @@ const MyCart =  () => {
     const [open, setOpen] = React.useState(false);
     const [confirmOpen, setConfirmOpen] = React.useState(false);
     const [selectedItem, setSelectedItem] = React.useState(null);
-    const firestore = useFirestore().firestore
     const [cartId, setCartId] = React.useState(0);
     const handleOpen = (item) => {
       setSelectedItem(item);

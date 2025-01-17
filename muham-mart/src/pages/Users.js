@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import { getDocs, updateDoc, deleteDoc, doc, addDoc, collection, getFirestore, writeBatch } from 'firebase/firestore';
+import { getDocs, deleteDoc, doc, addDoc, collection, getFirestore, writeBatch } from 'firebase/firestore';
 import { useFirestore } from '../contexts/FirestoreContext';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';

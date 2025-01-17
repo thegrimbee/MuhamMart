@@ -24,7 +24,9 @@ export default function ProductDetail(prop) {
     const { user } = useUser();
     const id = prop.id;
     const navigate = useNavigate();
-
+    const haveAddToCart = prop.haveAddToCart ? prop.haveAddToCart : true;
+    const imageSize = prop.imageSize;
+    const quantity = prop.quantity;
     useEffect(() => {
         const fetchProducts = async () => {
         try {
@@ -89,7 +91,7 @@ export default function ProductDetail(prop) {
                     <Card>
                         <CardMedia
                             component="img"
-                            height="300"
+                            height={imageSize ? imageSize : "300"}
                             image={product.url ? product.url : process.env.PUBLIC_URL +  '/assets/images/' +product.image}
                             alt={product.name}
                         />
@@ -163,14 +165,19 @@ export default function ProductDetail(prop) {
                                         <Box sx={{ ml: 1, display: 'flex', alignItems: 'center' }}>
                                             <ConfirmationNumberIcon />
                                         </Box>
-                                    </Box>                 
+                                    </Box>
+                                    {quantity && (
+                                        <Typography variant="h6" color="text.secondary">
+                                            Quantity: {quantity}
+                                        </Typography>
+                                    )}                
                                     <Box
                                         sx={{
                                             bgcolor: 'background.paper',
                                             pt: 2
                                         }}
                                     ></Box>
-                                    <AddButton product={product}/>  
+                                    {haveAddToCart && (<AddButton product={product}/>)  }
                                 </>
                               )}      
                         </CardContent>
