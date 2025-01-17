@@ -6,16 +6,14 @@ import { doc, getDoc, getDocs, updateDoc, deleteDoc } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AddToCart from '../utils/AddToCart';
-import Header from '../components/Header';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import EditIcon from '@mui/icons-material/Edit';
 import { useUser } from '../contexts/UserContext';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AddButton from '../components/AddButton';
+import AddButton from './AddButtonForChangeQuantity';
 
 
-
-export default function ProductDetail(prop) {
+export default function ChangeQuantity(prop) {
     //get the data from firestore
     const [product, setProduct] = useState({});
     const { itemsCollection } = useFirestore();
