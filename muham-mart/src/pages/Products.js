@@ -93,8 +93,8 @@ export default function Products() {
                         value={searchQuery}
                         onChange={handleSearchChange}
                     />
-                    <IconButton color="primary" sx={{ ml: 2 }} onClick={handleCartClick}>  
-                        <ShoppingCartIcon />
+                    <IconButton color="primary" sx={{ ml: 4 }} onClick={handleCartClick}>  
+                        <ShoppingCartIcon sx={{ fontSize: 40 }}/>
                     </IconButton>
                 </Box>
                 <Grid2 container spacing={4}>
