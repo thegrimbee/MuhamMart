@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import PeopleIcon from '@mui/icons-material/People';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import Tooltip from '@mui/material/Tooltip';
 
 const Header = () => {
   const { user } = useUser();
@@ -29,9 +30,11 @@ const Header = () => {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <IconButton color="inherit" sx={{ mr: 2 }} onClick={handleStoreClick}>
-            <StorefrontIcon />
-          </IconButton>
+          <Tooltip title="Store">
+            <IconButton color="inherit" sx={{ mr: 2 }} onClick={handleStoreClick}>
+              <StorefrontIcon />
+            </IconButton>
+          </Tooltip>
           <a href="/products" style={{ textDecoration: 'none', color: 'white' }}>
             <Typography variant="h6" color="inherit" noWrap>
               MuhamMart
@@ -39,9 +42,11 @@ const Header = () => {
           </a>
           {user && user.roleRank > 0 && (
             <>
-              <IconButton color="inherit" sx={{ml:20}}onClick={handleManageUsersClick}>
-                <PeopleIcon />
-              </IconButton>
+              <Tooltip title="Manage Users">
+                <IconButton color="inherit" sx={{ml:20}}onClick={handleManageUsersClick}>
+                  <PeopleIcon />
+                </IconButton>
+              </Tooltip>
               <Typography>
                 Manage Users
               </Typography>
@@ -51,9 +56,11 @@ const Header = () => {
           <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
             {user ? user.name : 'Guest'}
           </Typography>
-          <IconButton color="inherit" onClick={handleProfileClick}>
-            <AccountCircle />
-          </IconButton>
+          <Tooltip title="Profile">
+            <IconButton color="inherit" onClick={handleProfileClick}>
+              <AccountCircle />
+            </IconButton>
+          </Tooltip>
           <Typography variant="body1" color="inherit" sx={{ ml: 1 }}>
             {user ? user.vouchers : 0}
           </Typography>
